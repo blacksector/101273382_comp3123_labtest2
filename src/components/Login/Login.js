@@ -20,8 +20,6 @@ function Login() {
         authService.signInWithPopup(provider)
             .then(async (result) => {
                 // This gives you a Google Access Token. You can use it to access the Google API.
-                const credential = provider.credentialFromResult(result);
-                const token = credential.accessToken;
                 // The signed-in user info.
                 const user = result.user;
                 console.log(user);
@@ -38,7 +36,8 @@ function Login() {
                 // The email of the user's account used.
                 const email = error.email;
                 // The AuthCredential type that was used.
-                const credential = provider.credentialFromError(error);
+                // const credential = provider.credentialFromError(error);
+                console.log(error);
                 // ...
             });
     }
