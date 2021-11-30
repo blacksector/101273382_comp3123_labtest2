@@ -1,7 +1,7 @@
 import React from 'react'
-import ChatItem from './ChatItem'
+import UserItem from './UserItem'
 
-function ChatList({ users, setSelectedChat }) {
+function UserChatList({ users, setSelectedChat }) {
     return (
         <div 
             className={`container bg-white`} 
@@ -15,10 +15,10 @@ function ChatList({ users, setSelectedChat }) {
                     <p className={`lead text-center`}>Users List</p>
                     <hr style={{color: '#757779'}}/>
                     {users && users.map((user, index) => {
-                        return (<>
-                            <ChatItem user={user} setSelectedChat={setSelectedChat} />
+                        return (<div key={index} >
+                            <UserItem user={user} setSelectedChat={setSelectedChat}/>
                             {index === users.length ? '' : <hr style={{color: '#B4B3BA'}} />}
-                        </>)
+                        </div>)
                     })}
                 </div>
             </div>
@@ -26,4 +26,4 @@ function ChatList({ users, setSelectedChat }) {
     )
 }
 
-export default ChatList
+export default UserChatList

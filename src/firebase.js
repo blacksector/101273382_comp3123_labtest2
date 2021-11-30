@@ -1,8 +1,8 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
 
-const app = initializeApp({
+const app = firebase.initializeApp({
   apiKey: "AIzaSyCUSkYHibsoGUDt3pJeDvqdquwqiGxp_-w",
   authDomain: "labtest2-b5e14.firebaseapp.com",
   projectId: "labtest2-b5e14",
@@ -11,10 +11,11 @@ const app = initializeApp({
   appId: "1:958983832083:web:df6b91de48203fa65df5e6"
 });
 
+
 export function auth() {
-  return getAuth();
+  return firebase.auth();
 };
 
 export function firestore() {
-  return getFirestore();
+  return firebase.firestore();
 }

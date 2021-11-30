@@ -1,35 +1,36 @@
 import React from 'react';
 
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import firebase from 'firebase/app';
 import { auth, firestore } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-import { collection, doc, setDoc } from "firebase/firestore";
+// import { collection, doc, setDoc } from "firebase/firestore";
 
 import { Button } from 'react-bootstrap';
 
 function Login() {
 
-    const provider = new GoogleAuthProvider();
+    const provider = new firebase.auth.GoogleAuthProvider();
     const authService = auth();
     const db = firestore();
 
     const [user, loading, error] = useAuthState(authService);
 
     const signInWithGoogle = () => {
-        signInWithPopup(authService, provider)
+        authService.signInWithPopup(provider)
             .then(async (result) => {
                 // This gives you a Google Access Token. You can use it to access the Google API.
-                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const credential = provider.credentialFromResult(result);
                 const token = credential.accessToken;
                 // The signed-in user info.
                 const user = result.user;
-                await setDoc(doc(db, "users", user.uid), {
-                    displayName: user.displayName,
-                    photoURL: user.photoURL,
-                    email: user.email,
-                    uid: user.uid
-                });
+                console.log(user);
+                // await setDoc(doc(db, "users", user.uid), {
+                //     displayName: user.displayName,
+                //     photoURL: user.photoURL,
+                //     email: user.email,
+                //     uid: user.uid
+                // });
             }).catch((error) => {
                 // Handle Errors here.
                 const errorCode = error.code;
@@ -37,7 +38,7 @@ function Login() {
                 // The email of the user's account used.
                 const email = error.email;
                 // The AuthCredential type that was used.
-                const credential = GoogleAuthProvider.credentialFromError(error);
+                const credential = provider.credentialFromError(error);
                 // ...
             });
     }

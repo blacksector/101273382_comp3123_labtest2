@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
-import { auth, firestore } from '../../../firebase';
-import { collection } from "firebase/firestore";
 
+import firebase from 'firebase/app';
+import { auth, firestore } from '../../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
@@ -38,8 +38,8 @@ function ChatView({ chatUser, setSelectedChat }) {
             <div className={`row`}>
                 <div className={`col-12`}>
                     <button className={`btn btn-link`} onClick={() => { setSelectedChat(null); }}>Close Chat</button>
-                    <ChatBox chatId={chatId} />
-                    <ChatInput user={user} chatId={chatId} />
+                    {chatId && <><ChatBox chatId={chatId} />
+                    <ChatInput user={user} chatId={chatId} /></>}
                 </div>
             </div>
 
