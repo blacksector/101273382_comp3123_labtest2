@@ -19,28 +19,16 @@ function ChatBox({ chatId }) {
 
     const [user, loading, error] = useAuthState(authService);
     const messagesRef = db.collection("chats").doc(chatId).collection("messages");
-    const query = messagesRef.orderBy('createdAt').limitToLast(25);
+    // Limit to the last 100 messages, since this is a lab test
+    // I did not implement any complex mechanisms to load more messages
+    // as the user scrolls up.
+    const query = messagesRef.orderBy('createdAt').limitToLast(100);
     const [messagesCollection, loadingMessagesCollection, errorMessagesCollection] = useCollectionData(
         query,
         {
             snapshotListenOptions: { includeMetadataChanges: true },
         }
     );
-
-    // useEffect(() => {
-    //     console.log(chatId)
-    //     
-    //     // const messagesRef = doc(collection(db, "chats"), chatId, "messages");
-    //     console.log(messagesRef);
-    // }, [])
-
-    useEffect(() => {
-        console.log(messagesCollection)
-    }, [messagesCollection])
-
-    // if (loadingMessagesCollection) {
-    //     return <p>Loading...</p>
-    // }
 
     return (
         <div
@@ -49,9 +37,11 @@ function ChatBox({ chatId }) {
                 overflowY: 'scroll'
             }}
         >
+            {/* List out the messages */}
             {messagesCollection && messagesCollection.map((message) => {
                 return <ChatMessage userId={user.uid} message={message} />
             })}
+            {/* Used for scrolling to the bottom of the messages... */}
             <div ref={messagesEndRef} />
         </div>
     )

@@ -3,19 +3,18 @@
 }
 
 .message {
-  border-radius: 15px;
-  padding: 15px;
+  border-radius: 20px;
+  padding: 10px;
   margin: 5px;
   color: white;
-  /* width: auto; */
-  /* display: flex; */
-  /* flex-shrink: 0 !important; */
 }
 
 .message-right {
   background: var(--bs-primary);
+  border-bottom-right-radius: 0px;
 }
 
 .message-left {
   background: var(--bs-dark);
+  border-bottom-left-radius: 0px;
 }

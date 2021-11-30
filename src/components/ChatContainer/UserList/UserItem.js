@@ -20,7 +20,7 @@ function UserItem({ user, setSelectedChat }) {
                         src={user.photoURL || 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png'} 
                         roundedCircle />
                 </div>
-                <div className={`col-8 g-0 d-flex justify-content-center align-items-center`}>
+                <div className={`col-8 fw-bold g-0 d-flex justify-content-end align-items-center`}>
                     {user.displayName}
                 </div>
             </div>

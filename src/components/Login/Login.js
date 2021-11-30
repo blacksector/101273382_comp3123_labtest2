@@ -4,9 +4,8 @@ import firebase from 'firebase/app';
 import { auth, firestore } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-// import { collection, doc, setDoc } from "firebase/firestore";
 
-import { Button } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 
 function Login() {
 
@@ -23,12 +22,23 @@ function Login() {
                 // The signed-in user info.
                 const user = result.user;
                 console.log(user);
-                // await setDoc(doc(db, "users", user.uid), {
-                //     displayName: user.displayName,
-                //     photoURL: user.photoURL,
-                //     email: user.email,
-                //     uid: user.uid
-                // });
+
+                const usersRef = db.collection("users").doc(user.uid);
+
+                usersRef
+                    .set({
+                        displayName: user.displayName,
+                        photoURL: user.photoURL,
+                        email: user.email,
+                        uid: user.uid
+                    })
+                    .then((done) => {
+                        console.log("Done!", done)
+                    })
+                    .catch((error) => {
+                        // toast.error(error.message);
+                    });
+
             }).catch((error) => {
                 // Handle Errors here.
                 const errorCode = error.code;
@@ -45,14 +55,14 @@ function Login() {
     return (
         <div className={`container text-center`}>
             <div className={`row `}>
-                <div className={`d-flex flex-column justify-content-center align-items-center`} style={{height: '100vh'}}>
+                <div className={`d-flex flex-column justify-content-center align-items-center`} style={{ height: '100vh' }}>
                     <p className={`display-4`}>Firebase Chat</p>
                     <button className={`btn btn-primary`} onClick={() => {
                         signInWithGoogle();
                     }}>Sign in With Google</button>
                 </div>
             </div>
-            
+
 
 
         </div>

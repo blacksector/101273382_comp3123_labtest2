@@ -30,7 +30,7 @@ function ChatView({ chatUser, setSelectedChat }) {
         return () => {
             setChatId(null);
         }
-    }, [user])
+    }, [chatUser])
 
     return (
         <div

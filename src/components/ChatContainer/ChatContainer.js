@@ -19,7 +19,6 @@ function ChatContainer() {
 
 
     const usersRef = db.collection('users');
-    // const usersQuery = usersRef.orderBy('createdAt').limitToLast(25);
     const [usersCollection, loadingUsersCollection, errorUsersCollection] = useCollectionData(usersRef);
 
     const [userList, setUserList] = useState([]);
@@ -28,9 +27,14 @@ function ChatContainer() {
 
     useEffect(() => {
         if (usersCollection && usersCollection.length > 0) {
+            console.log(usersCollection)
             setUserList(usersCollection.filter((u) => u.uid !== user.uid));
         }
     }, [usersCollection])
+
+    useEffect(() => {
+        
+    }, [selectedChat])
 
     return (
         <div className={`container-fluid`} style={{ backgroundColor: '#F5F7FB', minHeight: '100vh' }}>
@@ -43,15 +47,17 @@ function ChatContainer() {
                 </nav>
             </div>
             <div className={`row`}>
-                <div className={`col-md-3`}>
+                <div className={`col-auto`} style={{minWidth: "300px"}}>
                     {usersCollection && <UserChatList users={userList} setSelectedChat={setSelectedChat} />}
                 </div>
-                <div className={`col-md-9`}>
+                <div className={`col-9`}>
                     {selectedChat === null && <div className={`d-flex flex-column justify-content-center align-items-center`} style={{ height: '80vh' }}>
                         <p className={`display-4`}>Select a Chat to Begin</p>
                     </div>}
-                    {selectedChat &&
-                        <ChatView chatUser={selectedChat} setSelectedChat={setSelectedChat} />
+                    {selectedChat !== null &&
+                        (
+                            <ChatView chatUser={selectedChat} setSelectedChat={setSelectedChat} />
+                        )
                     }
                 </div>
             </div>
