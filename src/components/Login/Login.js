@@ -2,10 +2,6 @@ import React from 'react';
 
 import firebase from 'firebase/app';
 import { auth, firestore } from '../../firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
-
-
-import { toast } from 'react-toastify';
 
 function Login() {
 
@@ -13,18 +9,14 @@ function Login() {
     const authService = auth();
     const db = firestore();
 
-    const [user, loading, error] = useAuthState(authService);
-
     const signInWithGoogle = () => {
         authService.signInWithPopup(provider)
             .then(async (result) => {
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                // The signed-in user info.
                 const user = result.user;
-                console.log(user);
 
+                // Store the users data in the db
+                // so other users can find them!
                 const usersRef = db.collection("users").doc(user.uid);
-
                 usersRef
                     .set({
                         displayName: user.displayName,
@@ -41,14 +33,7 @@ function Login() {
 
             }).catch((error) => {
                 // Handle Errors here.
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                // The email of the user's account used.
-                const email = error.email;
-                // The AuthCredential type that was used.
-                // const credential = provider.credentialFromError(error);
-                console.log(error);
-                // ...
+                console.log(error.message);
             });
     }
 
@@ -62,9 +47,6 @@ function Login() {
                     }}>Sign in With Google</button>
                 </div>
             </div>
-
-
-
         </div>
     )
 }

@@ -61,7 +61,7 @@ function ChatInput({ user, chatId }) {
 
             <form onSubmit={sendMessage} className="row justify-content-center mt-2">
                 
-                <div className="col-auto"><DropdownButton
+                <div className="col-auto d-none d-lg-block"><DropdownButton
                     as={ButtonGroup}
                     key={`up`}
                     id={`dropdown-button-drop-up`}

@@ -24,8 +24,8 @@ function ChatView({ chatUser, setSelectedChat }) {
             // Lets setup the chat id:
             let user1 = chatUser.uid;
             let user2 = user.uid;
-            setChatId('chat_'+(user1<user2 ? user1+'_'+user2 : user2+'_'+user1));
-            console.log('chat_'+(user1<user2 ? user1+'_'+user2 : user2+'_'+user1))
+            setChatId('chat_' + (user1 < user2 ? user1 + '_' + user2 : user2 + '_' + user1));
+            console.log('chat_' + (user1 < user2 ? user1 + '_' + user2 : user2 + '_' + user1))
         }
         return () => {
             setChatId(null);
@@ -36,15 +36,16 @@ function ChatView({ chatUser, setSelectedChat }) {
         <div
             className={`container-fluid bg-white`}
             style={{
-                minHeight: '90vh',
+                minHeight: '88vh',
                 paddingTop: '1vh',
+                paddingBottom: '1vh',
                 borderRadius: '25px'
             }}>
             <div className={`row`}>
                 <div className={`col-12`}>
                     <div className={`mb-2 d-flex justify-content-between`}>
                         <div>
-                            <UserItem user={chatUser} setSelectedChat={() =>{}} />
+                            <UserItem user={chatUser} setSelectedChat={() => { }} />
                         </div>
                         <div>
                             <button className={`btn btn-outline-dark`} onClick={() => { setSelectedChat(null); }}>Close Chat</button>
