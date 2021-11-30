@@ -1,0 +1,40 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+    
+    match /users/{userId} {
+ 			allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid == userId;
+    }
+  
+    
+    match /chats/{chatId}/messages/{chatMessageId} {
+ 			allow read: if canSeeMessage(chatId);
+      allow create: if canCreateMessage();
+    }
+    
+    function canSeeMessage(chatId) {
+    	let chatParts = chatId.split('_');
+      let isAOwner = request.auth.uid == chatParts[1] || request.auth.uid == chatParts[2];
+    	return isAOwner;
+    }
+    
+    function canCreateMessage() {
+      let isSignedIn = request.auth.uid != null;
+      let isOwner = request.auth.uid == request.resource.data.uid;
+      let isNotLong = request.resource.data.text.size() < 255;
+      let isNow = request.time == request.resource.data.createdAt;
+			let isNotBanned = true;
+      // let isNotBanned = exists(
+      	// /databases/$(database)/documents/banned/$(request.auth.uid)
+      // ) == false;
+      
+      return isSignedIn && isOwner && isNotLong && isNow && isNotBanned;
+    }
+    
+  }
+}
